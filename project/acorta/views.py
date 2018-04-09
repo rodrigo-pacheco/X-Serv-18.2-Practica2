@@ -5,16 +5,23 @@ from django.http import HttpResponseRedirect
 from .models import URL
 
 # Create your views here.
+def current_url_links():
+    html_code = "<p><h2>Shortened URLS:</h2></p>"
+    url_list = URL.objects.all()
+    for url in url_list:
+        html_code += ("<p><a href=" + url.url + ">" + str(url.id) + "</a> " +
+                      "-- " + "<a href=" + url.url + ">" + url.url + "</a></p>")
+    return(html_code)
+
 
 def barra(request):
     if request.method == 'GET':
-        "<html><body><h1>" +
+        return(HttpResponse("<html><body><h1>" +
                 """<form method=post accept-charset="utf-8">URL:<br>
                 <input type="text" name="URL" value="www.realmadrid.com"><br>
                 <input type="submit" value="Submit"></form>""" +
                 current_url_links() +
-                "</body></html>"
-    return(HttpResponse('Hola'))
+                "</body></html>"))
 
 def numero(request, num):
     redirect_url = URL.objects.get(id=str(num))
