@@ -18,5 +18,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'acorta.views.barra'),
-    url(r'(\d+)', 'acorta.views.numero'),
+    url(r'^(\d+)$', 'acorta.views.numero'),
+    url(r'.*', 'acorta.views.notfound')
 ]

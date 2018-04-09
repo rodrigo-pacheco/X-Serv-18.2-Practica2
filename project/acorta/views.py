@@ -4,7 +4,11 @@ from django.http import HttpResponse
 # Create your views here.
 
 def barra(request):
-    HttpResponse('Hola')
+    return(HttpResponse('Hola'))
 
 def numero(request, num):
-    HttpResponse('Adios')
+    return(HttpResponse('Adios'))
+
+def notfound(request):
+    return(HttpResponse('<h1>Usage error</h1><br>' + 
+                        'Try (server)/ or (server)/number'))
