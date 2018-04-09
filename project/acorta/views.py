@@ -7,6 +7,13 @@ from .models import URL
 # Create your views here.
 
 def barra(request):
+    if request.method == 'GET':
+        "<html><body><h1>" +
+                """<form method=post accept-charset="utf-8">URL:<br>
+                <input type="text" name="URL" value="www.realmadrid.com"><br>
+                <input type="submit" value="Submit"></form>""" +
+                current_url_links() +
+                "</body></html>"
     return(HttpResponse('Hola'))
 
 def numero(request, num):
