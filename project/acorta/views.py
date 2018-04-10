@@ -23,7 +23,6 @@ USAGE_ERROR = """<h1>Usage error</h1><br>
               (server)/admin/ [GET]
               <p><a href=/>Back to home page</a></p>"""
 
-LINK = """<a href=/{}>{}</a>"""
 
 # Create your views here.
 def correct_url(url):
@@ -59,7 +58,6 @@ def barra(request):
                     "<p><a href=/>Back to home page</a></p>")
             return(HttpResponse(body))
         body = ("<html><body><h1>Shortened URL: </h1>" +
-               # "<p>"" + LINK{str(new_url.id), str(new_url.id)} +
                "<p><a href=/" + str(new_url.id) + ">" + str(new_url.id) + "</a>"
                " > " + "<a href=" + new_url.url + ">" + new_url.url + "</a></p>"
                "<p><a href=/>Back to home page</a></p>" +
