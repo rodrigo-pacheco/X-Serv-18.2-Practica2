@@ -11,6 +11,8 @@ USAGE_ERROR = """<h1>Usage error</h1><br>
               (server)/number [GET] or
               (server)/admin/ [GET]"""
 
+LINK = """<a href=/{}>{}</a>"""
+
 # Create your views here.
 def current_url_links():
     html_code = "<p><h2>Shortened URLS:</h2></p>"
@@ -30,12 +32,10 @@ def barra(request):
                 current_url_links() +
                 "</body></html>"))
     elif request.method == 'POST':
-        try:
-            new_url = URL(url=request.POST["URL"])
-            new_url.save()
-        except:
-            print("EXCEEEEEEEEEEEEEPT")
+        new_url = URL(url=request.POST["URL"])
+        new_url.save()
         body = ("<html><body><h1>Shortened URL: </h1>" +
+               # "<p>"" + LINK{str(new_url.id), str(new_url.id)} +
                "<p><a href=/" + str(new_url.id) + ">" + str(new_url.id) + "</a>"
                " > " + "<a href=" + new_url.url + ">" + new_url.url + "</a></p>"
                "<p><a href=/>Back to start page</a></p>" +
