@@ -40,6 +40,7 @@ def current_url_links():
                       " > " + "<a href=" + url.url + ">" + url.url + "</a></p>")
     return(html_code)
 
+
 @csrf_exempt
 def barra(request):
     if request.method == 'GET':
@@ -66,6 +67,7 @@ def barra(request):
     else:
         return(HttpResponseNotFound(USAGE_ERROR))
 
+
 def numero(request, num):
     try:
         redirect_url = URL.objects.get(id=str(num))
@@ -73,6 +75,7 @@ def numero(request, num):
     except URL.DoesNotExist:
         return(HttpResponseNotFound("<html><body><h1>Number not in use</h1>"
                                     "<p><a href=/>Back to home page</a></p>"))
+
 
 def notfound(request):
     return(HttpResponseNotFound(USAGE_ERROR))
