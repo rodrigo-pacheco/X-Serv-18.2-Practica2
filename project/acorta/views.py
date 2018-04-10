@@ -51,11 +51,19 @@ def barra(request):
                 current_url_links() +
                 "</body></html>"))
     elif request.method == 'POST':
+        if request.POST["URL"] == '':   # Form received in blank
+            return HttpResponse("<html><body><h1>Blank URL. Try again</h1>"
+                                "<p><a href=/>Back to home page</a></p>")
         try:
             new_url = URL(url=correct_url(request.POST["URL"]))
             new_url.save()
         except IntegrityError:
+            old_url = URL.objects.get(url=correct_url(request.POST["URL"]))
+            url_redirect = old_url.url
+            num = str(old_url.id)
             body = ("<html><body><h1>URL already added</h1>"
+                   "<p><a href=/" + num + ">" + num + "</a>"
+                   " > " + "<a href=" + url_redirect + ">" + url_redirect + "</a></p>"
                     "<p><a href=/>Back to home page</a></p>")
             return(HttpResponse(body))
         body = ("<html><body><h1>Shortened URL: </h1>" +
