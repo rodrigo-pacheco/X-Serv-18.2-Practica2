@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.http import HttpResponseNotFound
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import URL
@@ -30,11 +31,11 @@ def barra(request):
     elif request.method == 'POST':
         return(HttpResponse('POST'))
     else:
-        return(HttpResponse(USAGE_ERROR))
+        return(HttpResponseNotFound(USAGE_ERROR))
 
 def numero(request, num):
     redirect_url = URL.objects.get(id=str(num))
     return(HttpResponseRedirect(redirect_url))
 
 def notfound(request):
-    return(HttpResponse(USAGE_ERROR))
+    return(HttpResponseNotFound(USAGE_ERROR))
