@@ -8,15 +8,16 @@ from .models import URL
 
 USAGE_ERROR = """<h1>Usage error</h1><br>
               Try (server)/ [GET/POST] or
-              (server)/number [GET]"""
+              (server)/number [GET] or
+              (server)/admin/ [GET]"""
 
 # Create your views here.
 def current_url_links():
     html_code = "<p><h2>Shortened URLS:</h2></p>"
     url_list = URL.objects.all()
     for url in url_list:
-        html_code += ("<p><a href=" + url.url + ">" + str(url.id) + "</a> " +
-                      "-- " + "<a href=" + url.url + ">" + url.url + "</a></p>")
+        html_code += ("<p><a href=/" + str(url.id) + ">" + str(url.id) + "</a>"
+                      " > " + "<a href=" + url.url + ">" + url.url + "</a></p>")
     return(html_code)
 
 @csrf_exempt
@@ -29,7 +30,17 @@ def barra(request):
                 current_url_links() +
                 "</body></html>"))
     elif request.method == 'POST':
-        return(HttpResponse('POST'))
+        try:
+            new_url = URL(url=request.POST["URL"])
+            new_url.save()
+        except:
+            print("EXCEEEEEEEEEEEEEPT")
+        body = ("<html><body><h1>Shortened URL: </h1>" +
+               "<p><a href=/" + str(new_url.id) + ">" + str(new_url.id) + "</a>"
+               " > " + "<a href=" + new_url.url + ">" + new_url.url + "</a></p>"
+               "<p><a href=/>Back to start page</a></p>" +
+               "</body></html>")
+        return(HttpResponse(body))
     else:
         return(HttpResponseNotFound(USAGE_ERROR))
 
